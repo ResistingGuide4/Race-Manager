@@ -1,54 +1,39 @@
 import Head from 'next/head';
-import { useState, useEffect, useRef } from 'react';
-import Timer from '../components/Timer';
+import { useState, useEffect } from 'react';
+import RaceTimes from '../components/RaceTimes';
 
 function RaceRecorder() {
+    const [currentTime, setTime] = useState(0);
+    const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-    const stopWatch = useRef(null );
-    console.log(stopWatch)
-    const currentTime = stopWatch.current;
+    function startAndStop() {
+        setIsTimerRunning(!isTimerRunning);
+    }
+
+    useEffect(() => {
+        let interval;
+        if (isTimerRunning) {interval = setInterval(() => setTime(currentTime + 1), 10)}
+        return () => clearInterval(interval);
+    }, [isTimerRunning, currentTime]);
 
     const hours = Math.floor(currentTime / 360000);
     const minutes = Math.floor((currentTime % 360000) / 6000);
     const seconds = Math.floor((currentTime % 6000) / 100);
     const milliseconds = currentTime % 100;
-
     return (
         <>
             <Head>
                 <title>Race Recorder</title>
             </Head>
-            <Timer pRef={stopWatch} />
-            
+            <h1 id='stopWatch'>{`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`}</h1>
+            <div>
+                {isTimerRunning ? <button onClick={startAndStop}>Stop</button> : <button onClick={startAndStop}>Start</button>}
+            </div>
+            <RaceTimes hours={hours} minutes={minutes} seconds={seconds} milliseconds={milliseconds} />
         </>
     );
 }
 
-function RaceTimes( {hours, minutes, seconds, milliseconds} ) {
 
-    const [times, setTimes] = useState([]);
-    function recordTime() {
-        const insertAt = times.length; // Could be any index
-        const nextTimes = [
-          // Items before the insertion point:
-          ...times.slice(0, insertAt),
-          // New item:
-            `${hours}:
-            ${minutes.toString().padStart(2, "0")}:
-            ${seconds.toString().padStart(2, "0")}:
-            ${milliseconds.toString().padStart(2, "0")}`,
-          // Items after the insertion point:
-          ...times.slice(insertAt)
-        ];
-        setTimes(nextTimes);
-    }
-    return (
-        <>
-            <button onClick={recordTime()}>Record</button>
-            <h2>Times</h2>
-            <div>hi</div>
-        </>
-    )
-}
 
 export default RaceRecorder;
