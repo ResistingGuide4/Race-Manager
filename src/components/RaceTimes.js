@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 function RaceTimes({ hours, minutes, seconds, milliseconds }) {
   const [times, setTimes] = useState([]);
 
@@ -12,13 +13,12 @@ function RaceTimes({ hours, minutes, seconds, milliseconds }) {
   
   function recordTime() {
     const insertAt = times.length; // Could be any index
+    const currentTime = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`;
     const nextTimes = [
       // Items before the insertion point:
       ...times.slice(0, insertAt),
       // New item:
-      `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
-        .toString()
-        .padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`,
+      currentTime,
       // Items after the insertion point:
       ...times.slice(insertAt),
     ];

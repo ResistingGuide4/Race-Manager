@@ -5,7 +5,6 @@ import RaceTimes from '../components/RaceTimes';
 function RaceRecorder() {
 		const [currentTime, setTime] = useState(0);
 		const [isTimerRunning, setIsTimerRunning] = useState(false);
-		let needResetTimes = false;
 
 		function startAndStop() {
 				setIsTimerRunning(!isTimerRunning);
