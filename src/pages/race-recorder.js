@@ -35,7 +35,7 @@ function RaceRecorder() {
 								{isTimerRunning ? <button onClick={startAndStop}>Stop</button> : <button onClick={startAndStop}>Start</button>}
 							<button onClick={resetTimer}>Reset</button>
 						</div>
-						<RaceTimes hours={hours} minutes={minutes} seconds={seconds} milliseconds={milliseconds} />
+						<RaceTimes hours={hours} minutes={minutes} seconds={seconds} milliseconds={milliseconds} isTimerRunning={isTimerRunning} />
 				</>
 		);
 }

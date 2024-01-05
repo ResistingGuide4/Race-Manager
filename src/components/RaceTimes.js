@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function RaceTimes({ hours, minutes, seconds, milliseconds }) {
+function RaceTimes({
+  hours,
+  minutes,
+  seconds,
+  milliseconds,
+  isTimerRunning
+}) {
   const [times, setTimes] = useState([]);
 
   function clearLastTime() {
@@ -11,15 +17,7 @@ function RaceTimes({ hours, minutes, seconds, milliseconds }) {
     setTimes([]);
   }
 
-  const fetchRaceData = async () => {
-    const response = await fetch("/api/add&ReadRaceData", {
-      method: "GET"
-    });
-    const data = await response.json();
-    console.log(data);
-  };
-
-  const addRace = async () => {
+  async function addRace() {
     const response = await fetch("/api/add&ReadRaceData", {
       method: "POST",
       headers: {
@@ -33,31 +31,41 @@ function RaceTimes({ hours, minutes, seconds, milliseconds }) {
         results: {
           1: {
             racerId: "2h6jd7djg3n2ivsj3n2",
-            finalTime: "0:02:38:28"
-          }
-        }
+            finalTime: "0:02:38:28",
+          },
+        },
       }),
     });
     const data = await response.json();
     console.log(data);
-  };
+  }
+
+  async function fetchRaceData() {
+    const response = await fetch("/api/add&ReadRaceData", {
+      method: "GET",
+    });
+    const data = await response.json();
+    console.log(data);
+  }
 
   function recordTime() {
-    const insertAt = times.length; // Could be any index
-    const currentTime = `${hours}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds
-      .toString()
-      .padStart(2, "0")}`;
-    const nextTimes = [
-      // Items before the insertion point:
-      ...times.slice(0, insertAt),
-      // New item:
-      currentTime,
-      // Items after the insertion point:
-      ...times.slice(insertAt),
-    ];
-    setTimes(nextTimes);
+    if (isTimerRunning) {
+      const insertAt = times.length; // Could be any index
+      const currentTime = `${hours}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds
+        .toString()
+        .padStart(2, "0")}`;
+      const nextTimes = [
+        // Items before the insertion point:
+        ...times.slice(0, insertAt),
+        // New item:
+        currentTime,
+        // Items after the insertion point:
+        ...times.slice(insertAt),
+      ];
+      setTimes(nextTimes);
+    }
   }
   return (
     <>
