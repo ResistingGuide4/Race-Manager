@@ -10,10 +10,45 @@ function RaceTimes({ hours, minutes, seconds, milliseconds }) {
   function clearAllTimes() {
     setTimes([]);
   }
-  
+
+  const fetchRaceData = async () => {
+    const response = await fetch("/api/add&ReadRaceData", {
+      method: "GET"
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
+  const addRace = async () => {
+    const response = await fetch("/api/add&ReadRaceData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        raceId: "13471dhshuh32hjf8dnjjn2",
+        raceName: "Testing 123",
+        raceDate: "2023-04-20",
+        raceStartTime: "11:00 am",
+        results: {
+          1: {
+            racerId: "2h6jd7djg3n2ivsj3n2",
+            finalTime: "0:02:38:28"
+          }
+        }
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   function recordTime() {
     const insertAt = times.length; // Could be any index
-    const currentTime = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`;
+    const currentTime = `${hours}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds
+      .toString()
+      .padStart(2, "0")}`;
     const nextTimes = [
       // Items before the insertion point:
       ...times.slice(0, insertAt),
@@ -27,7 +62,10 @@ function RaceTimes({ hours, minutes, seconds, milliseconds }) {
   return (
     <>
       <>
-        <button onClick={recordTime}>Record</button><button onClick={clearLastTime}>Clear last time</button><button onClick={clearAllTimes}>Clear all times</button>
+        <button onClick={recordTime}>Record</button>
+        <button onClick={clearLastTime}>Clear last time</button>
+        <button onClick={clearAllTimes}>Clear all times</button>
+        <button onClick={fetchRaceData}>test</button>
       </>
       <h2>Times</h2>
       <div>
