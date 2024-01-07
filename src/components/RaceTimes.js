@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function RaceTimes({
   hours,
@@ -13,10 +13,12 @@ function RaceTimes({
     setTimes(times.slice(0, times.length - 1));
   }
 
-  function clearAllTimes() {
-    setTimes([]);
-  }
-
+  useEffect(() => {
+    if (hours === 0 && minutes === 0 && seconds === 0 && milliseconds === 0) {
+      setTimes([]);
+    }
+  }, [hours, minutes, seconds, milliseconds]);
+  
   async function addRace() {
     const response = await fetch("/api/add&ReadRaceData", {
       method: "POST",
@@ -72,8 +74,6 @@ function RaceTimes({
       <>
         <button onClick={recordTime}>Record</button>
         <button onClick={clearLastTime}>Clear last time</button>
-        <button onClick={clearAllTimes}>Clear all times</button>
-        <button onClick={fetchRaceData}>test</button>
       </>
       <h2>Times</h2>
       <div>
