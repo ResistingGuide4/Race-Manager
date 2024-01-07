@@ -20,6 +20,10 @@ function RaceTimes({
   }, [hours, minutes, seconds, milliseconds]);
   
   async function addRace() {
+    const results = times.map((value) => ({
+      racerId: "unknown",
+      finalTime: value
+    }));
     const response = await fetch("/api/add&ReadRaceData", {
       method: "POST",
       headers: {
@@ -30,12 +34,7 @@ function RaceTimes({
         raceName: "Testing 123",
         raceDate: "2023-04-20",
         raceStartTime: "11:00 am",
-        results: {
-          1: {
-            racerId: "2h6jd7djg3n2ivsj3n2",
-            finalTime: "0:02:38:28",
-          },
-        },
+        results: results,
       }),
     });
     const data = await response.json();
@@ -86,6 +85,7 @@ function RaceTimes({
           );
         })}
       </div>
+      <button onClick={addRace}>End and Submit Race</button>
     </>
   );
 }
