@@ -1,0 +1,44 @@
+.shadow {
+    filter: brightness(50%);
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.normal {
+    filter: brightness(100%);
+}
+
+.full {
+    width: 100%;
+    height: 100%;
+}
+
+.warningFull {
+    display: block;
+    position: fixed;
+    width: 400px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+}
+
+.warningNone {
+    display: none;
+}
+
+.raceTimes {
+    filter: brightness(100%);
+}
+
+.stopwatch {
+    filter: brightness(100%);
+    margin: 0;
+}
+
+.stopwatchControls {
+    filter: brightness(100%);
+}
