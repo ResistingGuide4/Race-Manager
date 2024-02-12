@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import RaceTimes from '../components/RaceTimes';
-import {supabase} from "../../api";
 import styles from './race-recorder.module.css';
 
 function RaceRecorder() {
@@ -11,16 +10,6 @@ function RaceRecorder() {
 
   function startAndStop() {
     setIsTimerRunning(!isTimerRunning);
-  }
-  
-  async function test() {
-    const { data, error } = await supabase.auth.signUp({
-      email: 'johndoe@gmail.com',
-      password: 'Testing123',
-    })
-   if (error) {
-     console.log(error);
-   }
   }
 
   const resetWarningElement = (
