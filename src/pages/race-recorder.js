@@ -14,8 +14,10 @@ function RaceRecorder() {
   }
   
   async function test() {
-   const {data, error} = await supabase.from('XCountryAdmin').select();
-   console.log(JSON.stringify(data));
+    const { data, error } = await supabase.auth.signUp({
+      email: 'johndoe@gmail.com',
+      password: 'Testing123',
+    })
    if (error) {
      console.log(error);
    }
@@ -29,8 +31,6 @@ function RaceRecorder() {
       <button onClick={() => {setShowWarning(false); document.body.style.backgroundColor = "white";}}>Cancel</button>
     </div>
   )
-  
-  test();
  
   function resetTimer() {
     document.body.style.backgroundColor = "rgb(128,128,128)";
