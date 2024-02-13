@@ -11,26 +11,23 @@ export default function signUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function signUp() {
-    const { signUpError } = await supabase.auth.signUp({ 
-      email, 
-      password, 
-      options: {
-        data: {
-          role: 'admin'
-        }
-      }
+  async function logIn() {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     });
-    if (signUpError) {
-      console.error(signUpError);
+    if (error) {
+      console.error(error);
+    } else {
+      router.push("/dashboard");
     }
-    router.push("/dashboard");
+
   }
 
   return (
     <main>
       <Head>
-        <title>Sign Up</title>
+        <title>Log In</title>
       </Head>
       <form>
         <label htmlFor="email">Email:</label>
@@ -47,8 +44,8 @@ export default function signUp() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="button" onClick={signUp}>
-          Sign up
+        <button type="button" onClick={logIn}>
+          Log in
         </button>
       </form>
     </main>
